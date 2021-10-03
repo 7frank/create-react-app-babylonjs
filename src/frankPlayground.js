@@ -1,10 +1,17 @@
 import React, { useRef, useCallback } from 'react'
+import "@babylonjs/core/Physics/physicsEngineComponent"  
 import { Engine, Scene } from 'react-babylonjs'
 import { Vector3, PhysicsImpostor } from '@babylonjs/core';
 import {Control} from '@babylonjs/gui';
 
+import { CannonJSPlugin } from '@babylonjs/core/Physics/Plugins'
 
 
+import * as CANNON from 'cannon';
+window.CANNON = CANNON;
+
+// The TypeScript version of this story has it's own repo
+const gravityVector = new Vector3(0, -9.81, 0);
 
 function WithGUI() {
 
@@ -74,34 +81,20 @@ function WithGUI() {
 
   return (
     <>
-       
-
-       
-
-        <sphere name='Sphere1' ref={sphere1Ref} segments={10} diameter={9} position={new Vector3(-30, 0, 0)}  checkCollisions={true} >
+        <sphere name='Sphere1' ref={sphere1Ref} segments={10} diameter={9} position={new Vector3(-30, 5, 0)}  checkCollisions={true} />
+        <sphere name='Sphere2' ref={sphere2Ref} segments={2} diameter={9} position={new Vector3(-20, 50, 0)} checkCollisions={true} />
+        <sphere name='Sphere3' ref={sphere3Ref} segments={10} diameter={9} position={new Vector3(-10, 10, 0)} checkCollisions={true}  applyGravity={true} showSubMeshesBoundingBox={true} >
         <physicsImpostor type={PhysicsImpostor.SphereImpostor} _options={{
                     mass: 1,
                     restitution: 0.9
                 }} />
-
-
         </sphere>
-        <sphere name='Sphere2' ref={sphere2Ref} segments={2} diameter={9} position={new Vector3(-20, 50, 0)} checkCollisions={true} />
-        <sphere name='Sphere3' ref={sphere3Ref} segments={10} diameter={9} position={new Vector3(-10, 0, 0)} checkCollisions={true} />
-        <sphere name='Sphere4' ref={sphere4Ref} segments={10} diameter={9} position={new Vector3(0, 0, 0)} checkCollisions={true} />
-        <sphere name='Sphere5' ref={sphere5Ref} segments={10} diameter={9} position={new Vector3(10, 0, 0)} checkCollisions={true} />
-        <sphere name='Sphere6' ref={sphere6Ref} segments={10} diameter={9} position={new Vector3(20, 0, 0)} checkCollisions={true} />
-        <sphere name='Sphere7' ref={sphere7Ref} segments={10} diameter={9} position={new Vector3(30, 0, 0)} checkCollisions={true} />
+        <sphere name='Sphere4' ref={sphere4Ref} segments={10} diameter={9} position={new Vector3(0, 10, 0)} checkCollisions={true} />
+        <sphere name='Sphere5' ref={sphere5Ref} segments={10} diameter={9} position={new Vector3(10, 10, 0)} checkCollisions={true} />
+        <sphere name='Sphere6' ref={sphere6Ref} segments={10} diameter={9} position={new Vector3(20, 10, 0)} checkCollisions={true} />
+        <sphere name='Sphere7' ref={sphere7Ref} segments={10} diameter={9} position={new Vector3(30, 10, 0)} checkCollisions={true} />
 
         <adtFullscreenUi name='ui1' ref={onFullScreenRef}>
-          {/*<stackPanel width='220px' fontSize='14px'*/}
-          {/*            horizontalAlignment={Control.HORIZONTAL_ALIGNMENT_RIGHT}*/}
-          {/*            verticalAlignment={Control.VERTICAL_ALIGNMENT_CENTER}>*/}
-          {/*  <textBlock text='Slider' height='40px' color='white'*/}
-          {/*             textHorizontalAlignment={Control.HORIZONTAL_ALIGNMENT_LEFT}*/}
-          {/*             paddingTop='10px'/>*/}
-
-          {/*</stackPanel>*/}
 
           {[1,2,3,4,5,6,7].map((i) =>
             <rectangle key={`label${i}`} name={`label for Sphere${i}`} background='black' height='30px' alpha={0.5}
@@ -123,12 +116,12 @@ function WithGUI() {
 }
 
 
-const FrankPlayground = () => (
+const FrankPlayground = () => (  
   <div className="row">
     <div className="col-md-12">
       <Engine antialias={true} adaptToDeviceRatio={true} canvasId="sample-canvas" antialias adaptToDeviceRatio>
-        <Scene collisionsEnabled={true}>
-          <freeCamera name="camera1" position={new Vector3(0, 5, -10)} setTarget={[Vector3.Zero()]} checkCollisions={true} applyGravity={true} />
+        <Scene collisionsEnabled={true}  enablePhysics={[gravityVector, new CannonJSPlugin()]} >
+          <freeCamera name="camera1" position={new Vector3(0, 165, -10)} setTarget={[Vector3.Zero()]} checkCollisions={true} applyGravity={true} ellipsoid={new Vector3(2, 2, 2)} />
           <hemisphericLight name="light1" intensity={0.7} direction={Vector3.Up()} /> 
            <ground name="ground1" width={600} height={600} subdivisions={2} checkCollisions={true} />
           <WithGUI></WithGUI>
