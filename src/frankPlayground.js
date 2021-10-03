@@ -1,6 +1,6 @@
 import React, { useRef, useCallback } from 'react'
 import { Engine, Scene } from 'react-babylonjs'
-import { Vector3 } from '@babylonjs/core';
+import { Vector3, PhysicsImpostor } from '@babylonjs/core';
 import {Control} from '@babylonjs/gui';
 
 
@@ -78,10 +78,17 @@ function WithGUI() {
 
        
 
-        <sphere name='Sphere1' ref={sphere1Ref} segments={10} diameter={9} position={new Vector3(-30, 0, 0)}  checkCollisions={true} />
-        <sphere name='Sphere2' ref={sphere2Ref} segments={2} diameter={9} position={new Vector3(-20, 0, 0)} checkCollisions={true} />
+        <sphere name='Sphere1' ref={sphere1Ref} segments={10} diameter={9} position={new Vector3(-30, 0, 0)}  checkCollisions={true} >
+        <physicsImpostor type={PhysicsImpostor.SphereImpostor} _options={{
+                    mass: 1,
+                    restitution: 0.9
+                }} />
+
+
+        </sphere>
+        <sphere name='Sphere2' ref={sphere2Ref} segments={2} diameter={9} position={new Vector3(-20, 50, 0)} checkCollisions={true} />
         <sphere name='Sphere3' ref={sphere3Ref} segments={10} diameter={9} position={new Vector3(-10, 0, 0)} checkCollisions={true} />
-        <sphere name='Sphere4' ref={sphere4Ref} segments={10} diameter={0.5} position={new Vector3(0, 0, 0)} checkCollisions={true} />
+        <sphere name='Sphere4' ref={sphere4Ref} segments={10} diameter={9} position={new Vector3(0, 0, 0)} checkCollisions={true} />
         <sphere name='Sphere5' ref={sphere5Ref} segments={10} diameter={9} position={new Vector3(10, 0, 0)} checkCollisions={true} />
         <sphere name='Sphere6' ref={sphere6Ref} segments={10} diameter={9} position={new Vector3(20, 0, 0)} checkCollisions={true} />
         <sphere name='Sphere7' ref={sphere7Ref} segments={10} diameter={9} position={new Vector3(30, 0, 0)} checkCollisions={true} />
@@ -110,7 +117,6 @@ function WithGUI() {
           }
           <babylon-line name="sphere-7-line" alpha={0.5} lineWidth={5} dash={[5, 10]} ref={lineRef} />
 
-          <babylon-ellipse name="gui-ellipse" width='10px' height='10px' color='white' background='black'/>
         </adtFullscreenUi>
       </>
   )
@@ -124,8 +130,7 @@ const FrankPlayground = () => (
         <Scene collisionsEnabled={true}>
           <freeCamera name="camera1" position={new Vector3(0, 5, -10)} setTarget={[Vector3.Zero()]} checkCollisions={true} applyGravity={true} />
           <hemisphericLight name="light1" intensity={0.7} direction={Vector3.Up()} /> 
-          <sphere name="sphere1" diameter={2} segments={16} position={new Vector3(0, 10, 0)} checkCollisions={true} applyGravity={true}/>    
-          <ground name="ground1" width={600} height={600} subdivisions={2} checkCollisions={true} />
+           <ground name="ground1" width={600} height={600} subdivisions={2} checkCollisions={true} />
           <WithGUI></WithGUI>
         </Scene>
       </Engine>
