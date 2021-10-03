@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Layout from './layout/components';
 import DefaultPlayground from './defaultPlayground';
+import FrankPlayground from './frankPlayground';
 import DragNDrop from './dragNdrop'
 import WithProps from  './withProps/components/WithProps'; // has reducers, too
 import WithModel from  './withModel';
@@ -17,6 +18,7 @@ export const routes = (
         <Switch>
             <Route exact={true} path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route path={`${process.env.PUBLIC_URL}/defaultPlayground`} component={DefaultPlayground} />
+            <Route path={`${process.env.PUBLIC_URL}/frankPlayground`} component={FrankPlayground} />       
             <Route path={`${process.env.PUBLIC_URL}/dragNdrop`} component={DragNDrop} />
             <Route path={`${process.env.PUBLIC_URL}/withProps`} component={WithProps} />
             <Route path={`${process.env.PUBLIC_URL}/withModel`} component={WithModel} />

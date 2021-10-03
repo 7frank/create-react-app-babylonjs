@@ -43,6 +43,11 @@ class Layout extends Component {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
+                                <NavLink to={`${process.env.PUBLIC_URL}/frankPlayground`} activeClassName="active" className="nav-link">
+                                    <Octicon icon={ TriangleRight }/> Frank's Playground
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink to={`${process.env.PUBLIC_URL}/withProps`} activeClassName="active" className="nav-link">
                                     <Octicon icon={ TriangleRight }/> Props
                                 </NavLink>
